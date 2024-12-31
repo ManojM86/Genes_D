@@ -12,15 +12,15 @@ import plotly.express as px
 
 df=pd.read_csv("Genes.csv")
 
-df
+#df
 
-df.info()
+#df.info()
 
-df.describe()
+#df.describe()
 
-df.dtypes
+#df.dtypes
 
-df.columns
+#df.columns
 
 
 
@@ -28,37 +28,37 @@ df['user_id'].isnull().sum()
 
 df1 = df.dropna(subset=['user_id'])
 
-df1
+#df1
 
 df1['user_type'] = df1['user_id'].apply(lambda x: 'Free user' if x.startswith('unknown') else 'Logged In')
 
-df1
+#df1
 
 rename_mapping = {df1.columns[i]: f"col_{i}" for i in range(1, 110)}
 df1.rename(columns=rename_mapping, inplace=True)
 
-df1
+#df1
 
-df1.columns
+#df1.columns
 
 df2 = df1.iloc[:, 1:-2]
 
-df2
+#df2
 
 all_values = df2.values.flatten()
 all_values = pd.Series(all_values).dropna()
 
 all_values_counts=all_values.value_counts()
 
-all_values_counts
+#all_values_counts
 
 user_type_counts = df1['user_type'].value_counts()
 
-user_type_counts
+#user_type_counts
 
 api_hit_sum = df1['userInfo.apiHitCount'].sum()
 
-api_hit_sum
+#api_hit_sum
 
 #!pip install streamlit
 
@@ -106,10 +106,4 @@ if not user_type_counts.empty:
 st.subheader("Total API Hit Count")
 api_hit_sum = filtered_df1['userInfo.apiHitCount'].sum()
 st.write(api_hit_sum)
-
-filtered_df1
-
-filtered_col3
-
-all_values_counts
 
