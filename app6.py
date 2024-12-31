@@ -79,14 +79,14 @@ filtered_df1 = df1[df1['user_type'].isin(user_type_filter)]
 
 
 # Display Bar Chart for Name Counts
-st.subheader("Name Counts (Bar Chart)")
+st.subheader("Gene Type Counts")
 if not all_values_counts.empty:
     bar_chart = px.bar(
         all_values_counts,
         x=all_values_counts.index,
         y=all_values_counts.values,
-        labels={"x": "Name", "y": "Count"},
-        title="Name Value Counts"
+        labels={"x": "Gene Type", "y": "Count"},
+        title="Gene Type Counts"
     )
     st.plotly_chart(bar_chart)
 
