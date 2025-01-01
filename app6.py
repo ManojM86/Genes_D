@@ -58,7 +58,7 @@ import streamlit as st
 
 # Streamlit Dashboard
 st.title("Dashboard for Gene, User and ApiHit Count")
-
+st.sidebar.header('User Input Parameters')
 # Filter for 'user_type'
 user_type_filter = st.sidebar.multiselect(
     "Filter by User Type",
