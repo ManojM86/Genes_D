@@ -69,7 +69,9 @@ user_type_filter = st.sidebar.multiselect(
 # Apply filter to df1
 filtered_df1 = df1[df1['user_type'].isin(user_type_filter)]
 
-filtered_df1
+values = pd.series(filtered_df1.iloc[:,1:110].values.flatten()).dropna()
+value_counts= values.value_counts()
+value_counts 
 
 # Display Bar Chart for Name Counts
 st.subheader("Gene Type Counts")
