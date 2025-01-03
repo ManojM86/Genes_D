@@ -4,7 +4,7 @@
 # In[1]:
 
 
-get_ipython().system('pip install pymongo')
+#get_ipython().system('pip install pymongo')
 
 
 # In[17]:
