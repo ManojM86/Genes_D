@@ -76,19 +76,19 @@ df = flatten_nested_json(data)
 # In[51]:
 
 
-df
+#df
 
 
 # In[52]:
 
 
-df.columns
+#df.columns
 
 
 # In[53]:
 
 
-df.shape
+#df.shape
 
 
 # In[54]:
@@ -106,13 +106,13 @@ df['user_type'] = df['user_id'].apply(lambda x: 'Free user' if x.startswith('unk
 # In[56]:
 
 
-df.shape
+#df.shape
 
 
 # In[57]:
 
 
-df['user_type'].value_counts()
+#df['user_type'].value_counts()
 
 
 # In[73]:
@@ -124,7 +124,7 @@ df.columns = df.columns.str.lower()
 # In[74]:
 
 
-df
+#df
 
 
 # In[75]:
@@ -136,7 +136,7 @@ df1 = df[df['user_type'] == 'Logged In']
 # In[76]:
 
 
-df1
+#df1
 
 
 # In[79]:
@@ -148,13 +148,13 @@ date_columns = [col for col in df1.columns if 'date' in col.lower()]
 # In[80]:
 
 
-len('date_columns')
+#len('date_columns')
 
 
 # In[81]:
 
 
-date_columns
+#date_columns
 
 
 # In[84]:
@@ -166,7 +166,7 @@ timestamp_columns = [col for col in date_columns if 'threadlist' in col.lower()]
 # In[85]:
 
 
-timestamp_columns
+#timestamp_columns
 
 
 # In[86]:
@@ -182,7 +182,7 @@ for col in timestamp_columns:
 # In[88]:
 
 
-df1['threadlist[0]_date']
+#df1['threadlist[0]_date']
 
 
 # In[89]:
@@ -276,7 +276,7 @@ date_count= pd.DataFrame(date_count)
 # In[95]:
 
 
-date_count
+#date_count
 
 
 # In[98]:
@@ -288,7 +288,7 @@ date_count = date_count.rename(columns={0: 'date'})
 # In[99]:
 
 
-date_count
+#date_count
 
 
 # In[101]:
@@ -302,7 +302,7 @@ date_count['month'] = date_count['date'].dt.month
 # In[102]:
 
 
-date_count
+#date_count
 
 
 # In[103]:
@@ -314,7 +314,7 @@ subscription_type = [col for col in df1.columns if 'subscription_type' in col.lo
 # In[104]:
 
 
-subscription_type
+#subscription_type
 
 
 # In[105]:
@@ -332,7 +332,7 @@ subscription_status = [col for col in df1.columns if 'subscription_status' in co
 # In[107]:
 
 
-subscription_status
+#subscription_status
 
 
 # In[108]:
@@ -356,7 +356,7 @@ gene_phenotype_option = [col for col in df1.columns if 'gene_phenotype_option' i
 # In[111]:
 
 
-gene_phenotype_option
+#gene_phenotype_option
 
 
 # In[115]:
@@ -368,7 +368,7 @@ gene = [col for col in gene_phenotype_option if col.lower().count("_gene") >= 2]
 # In[116]:
 
 
-gene
+#gene
 
 
 # In[121]:
@@ -386,7 +386,7 @@ gene_total_count = gene_count.value_counts()
 # In[124]:
 
 
-gene_total_count
+#gene_total_count
 
 
 # In[125]:
@@ -399,14 +399,14 @@ drug_list = [col for col in df1.columns if 'current_drug' in col.lower()]
 
 
 current_drug = [col for col in drug_list if 'threadlist' in col.lower()]
-current_drug
+#current_drug
 
 
 # In[129]:
 
 
 drug_count =pd.Series(df1[current_drug].values.flatten()).dropna().value_counts()
-drug_count
+#drug_count
 
 
 # In[137]:
