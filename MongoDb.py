@@ -36,7 +36,7 @@ db = client['Data_Dat']
 # In[47]:
 
 
-collection = db['Drugs']
+collection = db['Drug']
 
 
 # In[48]:
