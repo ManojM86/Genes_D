@@ -94,7 +94,7 @@ df = flatten_nested_json(data)
 # In[54]:
 
 
-df['user_id'].isnull().value_counts()
+#df['user_id'].isnull().value_counts()
 
 
 # In[55]:
