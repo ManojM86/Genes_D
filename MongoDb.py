@@ -438,7 +438,7 @@ fig_week = px.bar(
 st.plotly_chart(fig_week)
 
 # Buttons for Gene and Drug Count Bar Charts
-if st.button("Show Gene and Drug Count Bar Chart"):
+st.header("Gene Count Chart")
     # Gene Count Bar Chart
     fig_gene = px.bar(
         x=gene_total_count.index,
@@ -448,6 +448,7 @@ if st.button("Show Gene and Drug Count Bar Chart"):
     )
     st.plotly_chart(fig_gene)
 
+st.header("Drug Count Chart")
     # Drug Count Bar Chart
     fig_drug = px.bar(
         x=drug_count.index,
@@ -458,7 +459,7 @@ if st.button("Show Gene and Drug Count Bar Chart"):
     st.plotly_chart(fig_drug)
 
 # Button for Subscription Count Pie Chart
-if st.button("Show Subscription Count Pie Chart"):
+st.header(" Subscription Count Chart"):
     subscription_count= df1['userinfo_subscriptiondetails_subscription_type'].value_counts()
     fig_subscription = px.pie(
         values=subscription_count.values,
@@ -468,8 +469,8 @@ if st.button("Show Subscription Count Pie Chart"):
     st.plotly_chart(fig_subscription)
 
 # Button for Month Bar Chart
-if st.button("Show Month Bar Chart"):
-    month_count = date_count["Month"].value_counts().sort_index()
+st.header("Show Month Bar Chart"):
+    month_count = date_count["month"].value_counts().sort_index()
     fig_month = px.bar(
         x=month_count.index,
         y=month_count.values,
