@@ -457,7 +457,7 @@ fig_drug = px.bar(
 st.plotly_chart(fig_drug)
 
 # Button for Subscription Count Pie Chart
-st.header(" Subscription Count Chart"):
+st.header(" Subscription Count Chart")
 subscription_count= df1['userinfo_subscriptiondetails_subscription_type'].value_counts()
 fig_subscription = px.pie(
     values=subscription_count.values,
@@ -467,7 +467,7 @@ fig_subscription = px.pie(
 st.plotly_chart(fig_subscription)
 
 # Button for Month Bar Chart
-st.header("Show Month Bar Chart"):
+st.header("Show Month Bar Chart")
 month_count = date_count["month"].value_counts().sort_index()
 fig_month = px.bar(
     x=month_count.index,
