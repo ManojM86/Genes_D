@@ -18,8 +18,8 @@ import plotly.express as px
 # In[44]:
 
 
-mongo_uri = "mongodb://localhost:27017/"  # Use Streamlit secrets for secure handling
-client = MongoClient(mongo_uri, serverSelectionTimeoutMS=5000)
+mongo_uri = "mongodb+srv://ms9876:mongodb_1234@cluster0.mfmcl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"  # Use Streamlit secrets for secure handling
+client = MongoClient(mongo_uri)
 
 
 # In[45]:
@@ -36,7 +36,7 @@ db = client['Data_Dat']
 # In[47]:
 
 
-collection = db['Genes']
+collection = db['Drugs']
 
 
 # In[48]:
