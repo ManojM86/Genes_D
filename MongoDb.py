@@ -491,7 +491,8 @@ fig_month = px.bar(
 )
 st.plotly_chart(fig_month)
 
-
+st.header("User Info")
+st.dataframe(userinfo_df)
 # In[ ]:
 
 
