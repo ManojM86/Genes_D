@@ -298,6 +298,11 @@ date_count['date'] = pd.to_datetime(date_count['date'])
 date_count['week'] = date_count['date'].dt.isocalendar().week
 date_count['month'] = date_count['date'].dt.month
 date_count['month'] = date_count['date'].dt.strftime('%B')
+month_order = [
+    "January", "February", "March", "April", "May", "June", 
+    "July", "August", "September", "October", "November", "December"
+]
+date_count['month'] = pd.Categorical(date_count['month'], categories=month_order, ordered=True)
 
 
 # In[102]:
