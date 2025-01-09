@@ -297,6 +297,7 @@ date_count = date_count.rename(columns={0: 'date'})
 date_count['date'] = pd.to_datetime(date_count['date'])
 date_count['week'] = date_count['date'].dt.isocalendar().week
 date_count['month'] = date_count['date'].dt.month
+date_count['month'] = date_count['date'].dt.strftime('%B')
 
 
 # In[102]:
@@ -346,6 +347,17 @@ df1['userinfo_subscriptiondetails_subscription_status'].value_counts()
 
 df1['userinfo_subscriptiondetails_subscription_status'].isnull().sum()
 
+
+# import streamlit as st
+st.header("User Details with ThreadList Count")
+df1.groupby(['user_id','userinfo_userprofile_firstname',
+ 'userinfo_userprofile_lastname',
+ 'userinfo_userprofile_email']).size().reset_index(name='value_counts').rename(columns={
+        'user_id': 'UserID', 
+        'userinfo_userprofile_firstname': 'First Name', 
+        'userinfo_userprofile_lastname': 'Last Name', 
+        'userinfo_userprofile_email': 'Email', 
+        'value_counts': 'ThreadList Counts'})
 
 # In[110]:
 
