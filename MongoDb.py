@@ -359,7 +359,7 @@ userinfo_df= (df1.groupby(['user_id','userinfo_userprofile_firstname', 'userinfo
         'value_counts': 'ThreadList Counts'})
              )
 
-st.dataframe(userinfo_df)
+print(userinfo_df)
 
 # In[110]:
 
