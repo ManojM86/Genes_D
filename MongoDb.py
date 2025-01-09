@@ -445,17 +445,6 @@ import plotly.express as px
 
 st.title("Interactive Dashboard")
 
-# Week Bar Chart (Always Displayed)
-st.header("Week Bar Chart")
-week_count = date_count["week"].value_counts().sort_index()
-fig_week = px.bar(
-    x=week_count.index,
-    y=week_count.values,
-    title="Week Distribution",
-    labels={"x": "Week", "y": "Count"}
-)
-st.plotly_chart(fig_week)
-
 # Buttons for Gene and Drug Count Bar Charts
 st.header("Gene Count Chart")
 fig_gene = px.bar(
@@ -495,6 +484,17 @@ fig_month = px.bar(
     labels={"x": "Month", "y": "Count"}
 )
 st.plotly_chart(fig_month)
+
+# Week Bar Chart (Always Displayed)
+st.header("Week Bar Chart")
+week_count = date_count["week"].value_counts().sort_index()
+fig_week = px.bar(
+    x=week_count.index,
+    y=week_count.values,
+    title="Week Distribution",
+    labels={"x": "Week", "y": "Count"}
+)
+st.plotly_chart(fig_week)
 
 st.header("User Info")
 st.dataframe(userinfo_df)
