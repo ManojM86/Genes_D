@@ -349,7 +349,7 @@ df1['userinfo_subscriptiondetails_subscription_status'].isnull().sum()
 
 
 # import streamlit as st
-st.header("User Details with ThreadList Count")
+
 userinfo_df= (df1.groupby(['user_id','userinfo_userprofile_firstname', 'userinfo_userprofile_lastname',
  'userinfo_userprofile_email']).size().reset_index(name='value_counts').rename(columns={
         'user_id': 'UserID', 
