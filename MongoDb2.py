@@ -54,7 +54,7 @@ df.columns=df.columns.str.lower()
 # In[45]:
 
 
-df
+#df
 
 
 # In[39]:
@@ -122,7 +122,7 @@ user_details=user_df.groupby(['userid', 'userprofile_firstname', 'userprofile_la
         'userinfo_userprofile_lastname': 'Last Name', 
         'userinfo_userprofile_email': 'Email', 
         'value_counts': 'ThreadList Counts'})
-user_details
+#user_details
 
 
 # In[100]:
@@ -130,14 +130,14 @@ user_details
 
 sub_status=[col for col in user_df.columns if 'subscription_status' in col.lower()]
 sub_status_count = user_df['subscriptiondetails_subscription_status'].value_counts()
-sub_status_count
+#sub_status_count
 
 
 # In[58]:
 
 
 input_df=flatten_column(df1,'input')
-input_df
+#input_df
 
 
 # In[67]:
@@ -152,14 +152,14 @@ gene_count=pd.Series(input_df[gene].values.flatten()).dropna()
 
 
 total_gene=gene_count.value_counts()
-total_gene
+#total_gene
 
 
 # In[71]:
 
 
 thread_list=flatten_column(df1,'threadlist')
-thread_list
+#thread_list
 
 
 # In[97]:
@@ -174,7 +174,7 @@ drug_total_count =drug_count.value_counts()
 
 
 date_columns = [col for col in thread_list.columns if 'date' in col.lower()]
-date_columns
+#date_columns
 
 
 # In[79]:
@@ -191,7 +191,7 @@ for col in date_columns:
 
 
 date_count=pd.DataFrame(pd.Series(thread_list[date_columns].values.flatten()).dropna())
-date_count
+#date_count
 
 
 # In[94]:
