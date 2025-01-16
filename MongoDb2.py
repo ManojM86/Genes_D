@@ -251,27 +251,7 @@ fig_subscription = px.bar(
 )
 st.plotly_chart(fig_subscription)
 
-# Button for Month Bar Chart
-st.header("Show Month Bar Chart")
-month_count = date_count["month"].value_counts().sort_index()
-fig_month = px.bar(
-    x=month_count.index,
-    y=month_count.values,
-    title="Month Distribution",
-    labels={"x": "Month", "y": "Count"}
-)
-st.plotly_chart(fig_month)
 
-# Week Bar Chart (Always Displayed)
-st.header("Week Bar Chart")
-week_count = date_count["week"].value_counts().sort_index()
-fig_week = px.bar(
-    x=week_count.index,
-    y=week_count.values,
-    title="Week Distribution",
-    labels={"x": "Week", "y": "Count"}
-)
-st.plotly_chart(fig_week)
 
 st.header("User Info")
 st.dataframe(user_details)
