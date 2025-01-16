@@ -207,7 +207,7 @@ month_order = [
     "July", "August", "September", "October", "November", "December"
 ]
 date_count['month'] = pd.Categorical(date_count['month'], categories=month_order, ordered=True)
-date_count
+#date_count
 
 
 # In[108]:
