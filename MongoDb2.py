@@ -251,6 +251,15 @@ fig_subscription = px.bar(
 )
 st.plotly_chart(fig_subscription)
 
+st.header("Show Month Bar Chart")
+month_count = date_count["month"].value_counts().sort_index()
+fig_month = px.bar(
+    x=month_count.index,
+    y=month_count.values,
+    title="Month Distribution",
+    labels={"x": "Month", "y": "Count"}
+)
+st.plotly_chart(fig_month)
 
 
 st.header("User Info")
