@@ -12,7 +12,7 @@ import plotly.express as px
 # In[2]:
 
 
-mongo_uri = "mongodb+srv://ms9876:mongodb_1234@cluster0.mfmcl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"  # Use secure handling for credentials
+mongo_uri = "mongodb+srv://****:****@cluster0.mfmcl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"  # Use secure handling for credentials
 
 
 # In[3]:
