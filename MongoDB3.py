@@ -157,51 +157,6 @@ chart_data['MonthYear'] = pd.Categorical(chart_data['MonthYear'], categories=cha
 import streamlit as st
 import altair as alt
 st.title("Interactive Dashboard")
-
-# Buttons for Gene and Drug Count Bar Charts
-st.header("Gene Count Chart")
-chart = alt.Chart(gene_df).mark_bar().encode(
-    x=alt.X("Gene:N", sort=None, title="Gene"),  # X-axis: Genes
-    y=alt.Y("Count:Q", title="Count"),          # Y-axis: Counts
-    tooltip=["Gene", "Count"]                   # Tooltip with Gene and Count
-).properties(
-    width=700,                                  # Chart width
-    height=400,                                 # Chart height
-    title="Count of Genes"
-)
-
-# Display the chart in Streamlit
-st.altair_chart(chart, use_container_width=True)
-
-st.header("Drug Count Chart")
-chart = alt.Chart(drug_df).mark_bar().encode(
-    x=alt.X("Gene:N", sort=None, title="Gene"),  # X-axis: Genes
-    y=alt.Y("Count:Q", title="Count"),          # Y-axis: Counts
-    tooltip=["Gene", "Count"]                   # Tooltip with Gene and Count
-).properties(
-    width=700,                                  # Chart width
-    height=400,                                 # Chart height
-    title="Count of Genes"
-)
-
-# Display the chart in Streamlit
-st.altair_chart(chart, use_container_width=True)
-
-# Button for Month Bar Chart
-st.header("Show Month Bar Chart")
-chart = alt.Chart(chart_data).mark_bar().encode(
-    x=alt.X('MonthYear:N', sort=chart_data['MonthYear'].categories, title='Month-Year'),
-    y=alt.Y('Count:Q', title='Count'),
-    tooltip=['MonthYear', 'Count']
-).properties(
-    width=600,
-    height=400,
-    title="Count of ThreadList by Month-Year"
-)
-
-# Display in Streamlit
-st.altair_chart(chart, use_container_width=True)
-
 st.header("User Info")
 st.dataframe(user_df)
 
