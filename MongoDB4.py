@@ -35,7 +35,7 @@ collection = db['Drug']
 # In[102]:
 
 
-collection
+#collection
 
 
 # In[103]:
