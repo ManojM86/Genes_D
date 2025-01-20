@@ -84,12 +84,12 @@ user_pipeline = [
     {"$match": {"user_id": {"$not": {"$regex": "^unknown"}}}},
     {"$addFields": {"threadListSize": {"$size": "$threadList"}}},
     {"$project": {
-        "_id": 0,  # Exclude the MongoDB default _id field
+        "_id": 0, 
         "user_id": 1,
         "firstname": "$userInfo.userProfile.firstName",
         "lastname": "$userInfo.userProfile.lastName",
         "email": "$userInfo.userProfile.email",
-        "threadListSize": 1  # Include the threadList count
+        "threadListSize": 1 
     }}
 ]
 user_results = list(collection.aggregate(user_pipeline))
@@ -114,8 +114,8 @@ date_pipeline = [
     {"$match": {"user_id": {"$not": {"$regex": "^unknown"}}}},
     {"$unwind": "$threadList"},
     {"$project": {
-        "_id": 0,  # Exclude MongoDB default _id
-        "date": "$threadList.date"  # Include the threadList.date field only
+        "_id": 0,  
+        "date": "$threadList.date" 
     }}
 ]
 date_results = list(collection.aggregate(date_pipeline))
@@ -157,36 +157,32 @@ import streamlit as st
 import altair as alt
 st.title("Interactive Dashboard")
 
-# Buttons for Gene and Drug Count Bar Charts
+# Gene and Drug Count Bar Charts
 st.header("Gene Count Chart")
 chart = alt.Chart(gene_df).mark_bar().encode(
-    x=alt.X("Gene:N", sort=None, title="Gene"),  # X-axis: Genes
-    y=alt.Y("Count:Q", title="Count"),          # Y-axis: Counts
-    tooltip=["Gene", "Count"]                   # Tooltip with Gene and Count
+    x=alt.X("Gene:N", sort=None, title="Gene"),  
+    y=alt.Y("Count:Q", title="Count"),          
+    tooltip=["Gene", "Count"]                   
 ).properties(
-    width=700,                                  # Chart width
-    height=400,                                 # Chart height
+    width=700,                                  
+    height=400,                                 
     title="Count of Genes"
 )
-
-# Display the chart in Streamlit
 st.altair_chart(chart, use_container_width=True)
 
 st.header("Drug Count Chart")
 chart = alt.Chart(drug_df).mark_bar().encode(
-    x=alt.X("Drug:N", sort=None, title="Drug"),  # X-axis: Genes
-    y=alt.Y("Count:Q", title="Count"),          # Y-axis: Counts
-    tooltip=["Drug", "Count"]                   # Tooltip with Gene and Count
+    x=alt.X("Drug:N", sort=None, title="Drug"),  
+    y=alt.Y("Count:Q", title="Count"),          
+    tooltip=["Drug", "Count"]                   
 ).properties(
-    width=700,                                  # Chart width
-    height=400,                                 # Chart height
+    width=700,                                  
+    height=400,                                 
     title="Count of Drugs"
 )
-
-# Display the chart in Streamlit
 st.altair_chart(chart, use_container_width=True)
 
-# Button for Month Bar Chart
+# Month Bar Chart
 st.header("Show Month Bar Chart")
 
 chart = alt.Chart(chart_data).mark_bar().encode(
@@ -196,8 +192,6 @@ chart = alt.Chart(chart_data).mark_bar().encode(
 ).properties(
     title="Month-Year Counts"
 )
-
-# Display the chart in Streamlit
 st.altair_chart(chart, use_container_width=True)
 
 st.header("User Info")
