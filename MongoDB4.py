@@ -55,7 +55,7 @@ gene_pipeline = [
 gene_results = list(collection.aggregate(gene_pipeline))
 gene_df = pd.DataFrame(gene_results)
 gene_df.rename(columns={"_id": "Gene", "count": "Count"}, inplace=True)
-gene_df
+#gene_df
 
 
 # In[104]:
@@ -74,7 +74,7 @@ drug_pipeline = [
 drug_results = list(collection.aggregate(drug_pipeline))
 drug_df = pd.DataFrame(drug_results)
 drug_df.rename(columns={"_id": "Drug", "count": "Count"}, inplace=True)
-drug_df
+#drug_df
 
 
 # In[105]:
@@ -102,7 +102,7 @@ user_df.rename(columns={
     "threadListSize": "ThreadList Count"
 }, inplace=True)
 user_df=user_df[['UserId','FirstName','LastName','Email','ThreadList Count']]
-user_df
+#user_df
 
 
 # In[106]:
@@ -125,7 +125,7 @@ date_results = list(collection.aggregate(date_pipeline))
 
 
 df_dates = pd.DataFrame(date_results)
-df_dates
+#df_dates
 
 
 # In[108]:
@@ -135,7 +135,7 @@ df_dates['Date'] = pd.to_datetime(df_dates['date'],unit='ms', errors='coerce')
 df_dates['Date1'] = df_dates['Date'].dt.date
 df_dates['MonthYear'] = df_dates['Date'].dt.strftime('%b%y')
 df_dates = df_dates[['Date1', 'MonthYear']]
-df_dates
+#df_dates
 
 
 # In[109]:
@@ -174,13 +174,13 @@ st.altair_chart(chart, use_container_width=True)
 
 st.header("Drug Count Chart")
 chart = alt.Chart(drug_df).mark_bar().encode(
-    x=alt.X("Gene:N", sort=None, title="Gene"),  # X-axis: Genes
+    x=alt.X("Drug:N", sort=None, title="Drug"),  # X-axis: Genes
     y=alt.Y("Count:Q", title="Count"),          # Y-axis: Counts
-    tooltip=["Gene", "Count"]                   # Tooltip with Gene and Count
+    tooltip=["Drug", "Count"]                   # Tooltip with Gene and Count
 ).properties(
     width=700,                                  # Chart width
     height=400,                                 # Chart height
-    title="Count of Genes"
+    title="Count of Drugs"
 )
 
 # Display the chart in Streamlit
