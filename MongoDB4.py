@@ -141,7 +141,7 @@ df_dates = df_dates[['Date1', 'MonthYear']]
 # In[109]:
 
 
-month_counts = df_dates['MonthYear'].value_counts().sort_index()
+month_counts = df_dates.groupby('MonthYear')['Value'].mean()
 chart_data = pd.DataFrame({
     'MonthYear': month_counts.index,
     'Count': month_counts.values
@@ -183,16 +183,21 @@ chart = alt.Chart(drug_df).mark_bar().encode(
 st.altair_chart(chart, use_container_width=True)
 
 # Month Bar Chart
-st.header("Show Month Bar Chart")
+st.header("Month Bar Chart")
 
-chart = alt.Chart(chart_data).mark_bar().encode(
+heatmap = alt.Chart(chart_data).mark_rect().encode(
     x=alt.X('MonthYear:N', sort=list(chart_data['MonthYear'].cat.categories), title='Month-Year'),
-    y=alt.Y('Count:Q', title='Count'),
-    tooltip=['MonthYear', 'Count']
+    y=alt.Y('AverageValue:Q', title='Average Value'),
+    color=alt.Color('AverageValue:Q', scale=alt.Scale(scheme='viridis'), title='Avg Value'),
+    tooltip=['MonthYear', 'AverageValue']
 ).properties(
-    title="Month-Year Counts"
+    title="Heatmap of Average Values by Month-Year",
+    width=600,
+    height=400
 )
-st.altair_chart(chart, use_container_width=True)
+
+# Display the heatmap in Streamlit
+st.altair_chart(heatmap, use_container_width=True)
 
 st.header("User Info")
 st.dataframe(user_df)
