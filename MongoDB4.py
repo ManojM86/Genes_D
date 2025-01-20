@@ -188,17 +188,16 @@ st.altair_chart(chart, use_container_width=True)
 
 # Button for Month Bar Chart
 st.header("Show Month Bar Chart")
+
 chart = alt.Chart(chart_data).mark_bar().encode(
-    x=alt.X('MonthYear:N', sort=chart_data['MonthYear'].categories, title='Month-Year'),
+    x=alt.X('MonthYear:N', sort=list(chart_data['MonthYear'].cat.categories), title='Month-Year'),
     y=alt.Y('Count:Q', title='Count'),
     tooltip=['MonthYear', 'Count']
 ).properties(
-    width=600,
-    height=400,
-    title="Count of ThreadList by Month-Year"
+    title="Month-Year Counts"
 )
 
-# Display in Streamlit
+# Display the chart in Streamlit
 st.altair_chart(chart, use_container_width=True)
 
 st.header("User Info")
