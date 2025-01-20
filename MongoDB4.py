@@ -11,7 +11,7 @@ import pandas as pd
 # In[98]:
 
 
-mongo_uri = "mongodb+srv://ms9876:mongodb_1234@cluster0.mfmcl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"  # Use secure handling for credentials
+mongo_uri = "mongodb+srv://ms9876:mongodb_1234@cluster0.mfmcl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"  
 
 
 # In[99]:
@@ -143,11 +143,9 @@ df_dates = df_dates[['Date1', 'MonthYear']]
 
 month_avg = (
     df_dates.groupby('MonthYear')
-    .size()  # Count the occurrences
-    .reset_index(name='Count')  # Reset index and rename count column
+    .size()  
+    .reset_index(name='Count')  
 )
-
-# Sort MonthYear in chronological order
 month_order = pd.to_datetime(month_avg['MonthYear'], format='%b%y')
 month_avg['MonthYear'] = pd.Categorical(month_avg['MonthYear'], categories=month_avg['MonthYear'][month_order.argsort()], ordered=True)
 
@@ -196,8 +194,6 @@ heatmap = alt.Chart(month_avg).mark_rect().encode(
     width=600,
     height=400
 )
-
-# Display the heatmap in Streamlit
 st.altair_chart(heatmap, use_container_width=True)
 
 st.header("User Info")
