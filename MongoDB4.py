@@ -141,14 +141,15 @@ df_dates = df_dates[['Date1', 'MonthYear']]
 # In[109]:
 
 
-month_counts = df_dates['MonthYear'].value_counts().sort_index()
-chart_data = pd.DataFrame({
-    'MonthYear': month_counts.index,
-    'Count': month_counts.values
-})
-month_order = pd.to_datetime(chart_data['MonthYear'], format='%b%y')
-chart_data['MonthYear'] = pd.Categorical(chart_data['MonthYear'], categories=chart_data['MonthYear'][month_order.argsort()], ordered=True)
+month_avg = (
+    df_dates.groupby('MonthYear')
+    .size()  # Count the occurrences
+    .reset_index(name='Count')  # Reset index and rename count column
+)
 
+# Sort MonthYear in chronological order
+month_order = pd.to_datetime(month_avg['MonthYear'], format='%b%y')
+month_avg['MonthYear'] = pd.Categorical(month_avg['MonthYear'], categories=month_avg['MonthYear'][month_order.argsort()], ordered=True)
 
 # In[110]:
 
@@ -185,11 +186,11 @@ st.altair_chart(chart, use_container_width=True)
 # Month Bar Chart
 st.header("Month Bar Chart")
 
-heatmap = alt.Chart(chart_data).mark_rect().encode(
-    x=alt.X('MonthYear:N', sort=list(chart_data['MonthYear'].cat.categories), title='Month-Year'),
-    y=alt.Y('AverageCount:Q', title='Average Count'),
-    color=alt.Color('AverageCount:Q', scale=alt.Scale(scheme='viridis'), title='Avg Count'),
-    tooltip=['MonthYear', 'AverageCount']
+heatmap = alt.Chart(month_avg).mark_rect().encode(
+    x=alt.X('MonthYear:N', sort=list(month_avg['MonthYear'].cat.categories), title='Month-Year'),
+    y=alt.Y('Count:Q', title='Average Count'),
+    color=alt.Color('Count:Q', scale=alt.Scale(scheme='viridis'), title='Avg Count'),
+    tooltip=['MonthYear', 'Count']
 ).properties(
     title="Heatmap of Average Counts by Month-Year",
     width=600,
