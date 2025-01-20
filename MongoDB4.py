@@ -188,11 +188,11 @@ st.header("Month Bar Chart")
 
 heatmap = alt.Chart(month_avg).mark_rect().encode(
     x=alt.X('MonthYear:N', sort=list(month_avg['MonthYear'].cat.categories), title='Month-Year'),
-    y=alt.Y('Count:Q', title='Average Count'),
-    color=alt.Color('Count:Q', scale=alt.Scale(scheme='viridis'), title='Avg Count'),
+    y=alt.Y('Count:Q', title='Count'),
+    color=alt.Color('Count:Q', scale=alt.Scale(scheme='viridis'), title='Count'),
     tooltip=['MonthYear', 'Count']
 ).properties(
-    title="Heatmap of Average Counts by Month-Year",
+    title="Heatmap of Counts by Month-Year",
     width=600,
     height=400
 )
