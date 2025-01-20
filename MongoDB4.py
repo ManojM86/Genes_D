@@ -141,7 +141,7 @@ df_dates = df_dates[['Date1', 'MonthYear']]
 # In[109]:
 
 
-month_counts = df_dates.groupby('MonthYear')['Value'].mean()
+month_counts = df_dates['MonthYear'].value_counts().sort_index()
 chart_data = pd.DataFrame({
     'MonthYear': month_counts.index,
     'Count': month_counts.values
@@ -187,11 +187,11 @@ st.header("Month Bar Chart")
 
 heatmap = alt.Chart(chart_data).mark_rect().encode(
     x=alt.X('MonthYear:N', sort=list(chart_data['MonthYear'].cat.categories), title='Month-Year'),
-    y=alt.Y('AverageValue:Q', title='Average Value'),
-    color=alt.Color('AverageValue:Q', scale=alt.Scale(scheme='viridis'), title='Avg Value'),
-    tooltip=['MonthYear', 'AverageValue']
+    y=alt.Y('AverageCount:Q', title='Average Count'),
+    color=alt.Color('AverageCount:Q', scale=alt.Scale(scheme='viridis'), title='Avg Count'),
+    tooltip=['MonthYear', 'AverageCount']
 ).properties(
-    title="Heatmap of Average Values by Month-Year",
+    title="Heatmap of Average Counts by Month-Year",
     width=600,
     height=400
 )
