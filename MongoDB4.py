@@ -151,9 +151,9 @@ month_avg['MonthYear'] = pd.Categorical(month_avg['MonthYear'], categories=month
 
 #question&Answers
 pipeline_user_ids = [
-    {"$match": {"user_id": {"$not": {"$regex": "^unknown"}}}},  # Exclude unknown user_ids
-    {"$group": {"_id": "$user_id"}},  # Group by user_id to get unique IDs
-    {"$sort": {"_id": 1}}  # Sort user IDs alphabetically
+    {"$match": {"user_id": {"$not": {"$regex": "^unknown"}}}}, 
+    {"$group": {"_id": "$user_id"}}, 
+    {"$sort": {"_id": 1}}
 ]
 user_ids = list(collection.aggregate(pipeline_user_ids))
 user_ids = [doc["_id"] for doc in user_ids] 
@@ -212,31 +212,25 @@ st.dataframe(user_df)
 
 # In[ ]:
 
-# Step 2: Create a dropdown in Streamlit to select a user ID
+# dropdown in Streamlit to select a user ID
 selected_user_id = st.selectbox("Select User ID:", user_ids)
 
-# Step 3: If a user ID is selected, fetch and display the corresponding questions and answers
+#If a user ID is selected, display the corresponding questions and answers
 if selected_user_id:
     pipeline_questions_answers = [
-        {"$match": {"user_id": selected_user_id}},  # Filter for the selected user ID
-        {"$unwind": "$input"},  # Unwind the input array
-        {"$unwind": "$input.input_data"},  # Unwind the input_data array
+        {"$match": {"user_id": selected_user_id}}, 
+        {"$unwind": "$input"}, 
+        {"$unwind": "$input.input_data"},
         {"$project": {
             "_id": 0,
             "user_id": 1,
-            "question": "$input.input_data.question",  # Extract the question
-            "answer": "$input.input_data.answer"  # Extract the answer
+            "question": "$input.input_data.question", 
+            "answer": "$input.input_data.answer" 
         }}
     ]
-
-    # Execute the pipeline to fetch questions and answers
     results = list(collection.aggregate(pipeline_questions_answers))
-
-    # Convert results to a DataFrame
     if results:
         df = pd.DataFrame(results)
-
-        # Display the DataFrame in Streamlit
         st.write(f"Questions and Answers for User ID: {selected_user_id}")
         st.dataframe(df)
     else:
