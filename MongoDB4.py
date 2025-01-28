@@ -223,6 +223,7 @@ if selected_user_id:
         {"$unwind": "$input.input_data"},  # Unwind the input_data array
         {"$project": {
             "_id": 0,
+            "user_id": 1,
             "question": "$input.input_data.question",  # Extract the question
             "answer": "$input.input_data.answer"  # Extract the answer
         }}
