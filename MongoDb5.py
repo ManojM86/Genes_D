@@ -91,7 +91,7 @@ user_pipeline = [
 ]
 user_results = list(collection1.aggregate(user_pipeline))
 user_df = pd.DataFrame(user_results)
-user_df
+#user_df
 
 
 # In[15]:
@@ -110,14 +110,14 @@ pipeline_questions_answers = [
 ]
 query_results = list(collection2.aggregate(pipeline_questions_answers))
 query_df = pd.DataFrame(query_results)
-query_df
+#query_df
 
 
 # In[17]:
 
 
 merged_df = pd.merge(user_df, query_df, on='user_id', how='inner')
-merged_df
+#merged_df
 
 
 # In[22]:
@@ -126,9 +126,9 @@ merged_df
 question_counts = merged_df.groupby(['role', 'question','answer']).size().reset_index(name='count')
 
 # Step 3: Sort by count in descending order
-sorted_df = question_counts.sort_values(by='count', ascending=False)
+#sorted_df = question_counts.sort_values(by='count', ascending=False)
 
-sorted_df
+#sorted_df
 
 
 # In[24]:
@@ -151,7 +151,7 @@ selected_role = st.selectbox("Select a Role:", roles)
 filtered_df = question_counts[question_counts['role'] == selected_role].sort_values(by='count', ascending=False)
 
 # Display the filtered DataFrame
-st.dataframe(filtered_df[['questions', 'answers', 'count']].reset_index(drop=True))
+st.dataframe(filtered_df[['question', 'answers', 'count']].reset_index(drop=True))
 
 
 # In[ ]:
