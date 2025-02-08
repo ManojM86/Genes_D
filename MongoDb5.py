@@ -151,7 +151,7 @@ selected_role = st.selectbox("Select a Role:", roles)
 filtered_df = question_counts[question_counts['role'] == selected_role].sort_values(by='count', ascending=False)
 
 # Display the filtered DataFrame
-st.dataframe(filtered_df[['question', 'answers', 'count']].reset_index(drop=True))
+st.dataframe(filtered_df[['question', 'answer', 'count']].reset_index(drop=True))
 
 
 # In[ ]:
