@@ -41,7 +41,7 @@ collection2 = db['Drug']
 # In[7]:
 
 
-def pipeline(a):
+#def pipeline(a):
     pipeline = [
     {"$group": {"_id":  f"${a}",
         "count": {"$sum": 1}
@@ -57,25 +57,25 @@ def pipeline(a):
 # In[8]:
 
 
-pipeline('role')
+#pipeline('role')
 
 
 # In[9]:
 
 
-pipeline('affiliation')
+#pipeline('affiliation')
 
 
 # In[10]:
 
 
-pipeline('jobTitle')
+#pipeline('jobTitle')
 
 
 # In[11]:
 
 
-pipeline("country")
+#pipeline("country")
 
 
 # In[12]:
