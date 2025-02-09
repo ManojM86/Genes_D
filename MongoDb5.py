@@ -190,7 +190,7 @@ if selected_country:
 filtered_df = filtered_df.drop(columns=['user_id'])
 
 # Display Filtered Data without User IDs
-st.dataframe(filtered_df)
+#st.dataframe(filtered_df)
 
 # Display Overall Count of Filtered Results
 st.subheader(f"Total Users Matching Filters: {len(filtered_df)}")
