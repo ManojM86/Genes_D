@@ -186,18 +186,20 @@ if selected_job_title:
 if selected_country:
     filtered_df = filtered_df[filtered_df['country'].isin(selected_country)]
 
-# Display Filtered Data
+# Remove 'user_id' from the final DataFrame
+filtered_df = filtered_df.drop(columns=['user_id'])
+
+# Display Filtered Data without User IDs
 st.dataframe(filtered_df)
 
-# Bar Chart
-st.subheader("Count of Users by Role")
-role_counts = filtered_df['role'].value_counts()
+# Display Overall Count of Filtered Results
+st.subheader(f"Total Users Matching Filters: {len(filtered_df)}")
 
-fig, ax = plt.subplots()
-role_counts.plot(kind='bar', ax=ax)
-ax.set_xlabel('Role')
-ax.set_ylabel('Count')
-ax.set_title('User Count by Role')
-st.pyplot(fig)
+# Bar Chart using Streamlit's built-in bar_chart
+st.subheader("Count of Users by Role")
+role_counts = filtered_df['role'].value_counts().reset_index()
+role_counts.columns = ['Role', 'Count']
+
+st.bar_chart(role_counts.set_index('Role'))
 
 
