@@ -130,7 +130,19 @@ question_counts = merged_df.groupby(['role', 'question','answer']).size().reset_
 
 #sorted_df
 
-
+new_pipeline = [
+    {"$project": {
+        "_id": 0, 
+        "user_id": "$user_id",
+        "role" : "$role",
+        "affiliation" : "$affiliation",
+        "jontitle" : "$jobTitle",
+        "country" : "$country"
+    }}
+]
+new_results = list(collection1.aggregate(new_pipeline))
+new_df = pd.DataFrame(new_results)
+#new_df
 # In[24]:
 
 
@@ -154,6 +166,38 @@ filtered_df = question_counts[question_counts['role'] == selected_role].sort_val
 # Display the filtered DataFrame
 st.dataframe(filtered_df[['question', 'answer', 'count']].reset_index(drop=True))
 
+st.header("Role Based")
+import matplotlib.pyplot as plt
 
+selected_role = st.multiselect("Select Role(s):", new_df['role'].unique())
+selected_affiliation = st.multiselect("Select Affiliation(s):", new_df['affiliation'].unique())
+selected_job_title = st.multiselect("Select Job Title(s):", new_df['jobTitle'].unique())
+selected_country = st.multiselect("Select Country(ies):", new_df['country'].unique())
+
+# Applying Filters
+filtered_df = new_df.copy()
+
+if selected_role:
+    filtered_df = filtered_df[filtered_df['role'].isin(selected_role)]
+if selected_affiliation:
+    filtered_df = filtered_df[filtered_df['affiliation'].isin(selected_affiliation)]
+if selected_job_title:
+    filtered_df = filtered_df[filtered_df['jobTitle'].isin(selected_job_title)]
+if selected_country:
+    filtered_df = filtered_df[filtered_df['country'].isin(selected_country)]
+
+# Display Filtered Data
+st.dataframe(filtered_df)
+
+# Bar Chart
+st.subheader("Count of Users by Role")
+role_counts = filtered_df['role'].value_counts()
+
+fig, ax = plt.subplots()
+role_counts.plot(kind='bar', ax=ax)
+ax.set_xlabel('Role')
+ax.set_ylabel('Count')
+ax.set_title('User Count by Role')
+st.pyplot(fig)
 
 
