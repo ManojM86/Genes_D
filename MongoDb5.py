@@ -136,7 +136,7 @@ new_pipeline = [
         "user_id": "$user_id",
         "role" : "$role",
         "affiliation" : "$affiliation",
-        "jobtitle" : "$jobTitle",
+        "jobTitle" : "$jobTitle",
         "country" : "$country"
     }}
 ]
