@@ -40,9 +40,8 @@ collection2 = db['Drug']
 
 # In[7]:
 
-
-#def pipeline(a):
-    pipeline = [
+"""
+#def pipeline(a):pipeline = [
     {"$group": {"_id":  f"${a}",
         "count": {"$sum": 1}
     }},
@@ -52,7 +51,7 @@ collection2 = db['Drug']
     df = pd.DataFrame(results)
     df.rename(columns={"_id": a, "count": "Count"}, inplace=True)
     return df
-
+"""
 
 # In[8]:
 
