@@ -155,6 +155,7 @@ import streamlit as st
 # Streamlit App
 st.title("Role-Based Question Insights")
 
+st.header("Mostly Asked Questions")
 # Role Filter
 roles = question_counts['role'].unique()
 selected_role = st.selectbox("Select a Role:", roles)
@@ -169,6 +170,7 @@ st.dataframe(filtered_df[['question', 'answer', 'count']].reset_index(drop=True)
 # In[ ]:
 import matplotlib.pyplot as plt
 
+st.header(" Count")
 selected_role = st.multiselect("Select Role(s):", new_df['role'].unique())
 selected_affiliation = st.multiselect("Select Affiliation(s):", new_df['affiliation'].unique())
 selected_job_title = st.multiselect("Select Job Title(s):", new_df['jobTitle'].unique())
