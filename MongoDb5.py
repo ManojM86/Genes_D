@@ -11,7 +11,7 @@ import pandas as pd
 # In[2]:
 
 
-mongo_uri = "mongodb+srv://ms9876:MongoDB%401234@cluster0.mfmcl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"  
+mongo_uri = "mongodb+srv://ms9876:mongo_1234@cluster0.mfmcl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"  
 
 
 # In[3]:
