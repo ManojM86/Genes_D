@@ -23,13 +23,14 @@ client = MongoClient(mongo_uri)
 # In[100]:
 
 
-db = client['Data_Dat']
+db = client['pgxApp']
 
 
 # In[101]:
 
 
-collection = db['Drug']
+collection1 = db['pgx_threads']
+collection2 = db['userSubscription']
 
 
 # In[102]:
@@ -52,7 +53,7 @@ gene_pipeline = [
     }},
     {"$sort": {"count": -1}}
 ]
-gene_results = list(collection.aggregate(gene_pipeline))
+gene_results = list(collection1.aggregate(gene_pipeline))
 gene_df = pd.DataFrame(gene_results)
 gene_df.rename(columns={"_id": "Gene", "count": "Count"}, inplace=True)
 #gene_df
@@ -71,7 +72,7 @@ drug_pipeline = [
     }},
     {"$sort": {"count": -1}}
 ]
-drug_results = list(collection.aggregate(drug_pipeline))
+drug_results = list(collection1.aggregate(drug_pipeline))
 drug_df = pd.DataFrame(drug_results)
 drug_df.rename(columns={"_id": "Drug", "count": "Count"}, inplace=True)
 #drug_df
@@ -92,7 +93,7 @@ user_pipeline = [
         "threadListSize": 1 
     }}
 ]
-user_results = list(collection.aggregate(user_pipeline))
+user_results = list(collection1.aggregate(user_pipeline))
 user_df = pd.DataFrame(user_results)
 user_df.rename(columns={
     "user_id": "UserId",
@@ -118,7 +119,7 @@ date_pipeline = [
         "date": "$threadList.date" 
     }}
 ]
-date_results = list(collection.aggregate(date_pipeline))
+date_results = list(collection1.aggregate(date_pipeline))
 
 
 # In[107]:
@@ -155,7 +156,7 @@ pipeline_user_ids = [
     {"$group": {"_id": "$user_id"}}, 
     {"$sort": {"_id": 1}}
 ]
-user_ids = list(collection.aggregate(pipeline_user_ids))
+user_ids = list(collection1.aggregate(pipeline_user_ids))
 user_ids = [doc["_id"] for doc in user_ids] 
 #user_ids
 
