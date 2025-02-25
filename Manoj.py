@@ -44,7 +44,122 @@ collection2 = db['pgx_threads']
 
 
 # In[7]:
+gene_pipeline = [
+    {"$match": {"user_id": {"$not": {"$regex": "^unknown"}}}},
+    {"$unwind": "$input"},
+    {"$unwind": "$input.gene_phenotype_options"},
+    {"$group": {
+        "_id": "$input.gene_phenotype_options.gene",
+        "count": {"$sum": 1}
+    }},
+    {"$sort": {"count": -1}}
+]
+gene_results = list(collection2.aggregate(gene_pipeline))
+gene_df = pd.DataFrame(gene_results)
+gene_df.rename(columns={"_id": "Gene", "count": "Count"}, inplace=True)
+#gene_df
 
+
+# In[104]:
+
+
+import pandas as pd
+drug_pipeline = [
+    {"$match": {"user_id": {"$not": {"$regex": "^unknown"}}}},
+    {"$unwind": "$threadList"},
+    {"$group": {
+        "_id": "$threadList.current_drug",
+        "count": {"$sum": 1}
+    }},
+    {"$sort": {"count": -1}}
+]
+drug_results = list(collection2.aggregate(drug_pipeline))
+drug_df = pd.DataFrame(drug_results)
+drug_df.rename(columns={"_id": "Drug", "count": "Count"}, inplace=True)
+#drug_df
+
+
+# In[105]:
+
+
+user_pipeline = [
+    {"$match": {"user_id": {"$not": {"$regex": "^unknown"}}}},
+    {"$addFields": {"threadListSize": {"$size": "$threadList"}}},
+    {"$project": {
+        "_id": 0, 
+        "user_id": 1,
+        "firstname": "$userInfo.userProfile.firstName",
+        "lastname": "$userInfo.userProfile.lastName",
+        "email": "$userInfo.userProfile.email",
+        "threadListSize": 1 
+    }}
+]
+user_results = list(collection2.aggregate(user_pipeline))
+user_df = pd.DataFrame(user_results)
+user_df.rename(columns={
+    "user_id": "UserId",
+    "firstname": "FirstName",
+    "lastname": "LastName",
+    "email": "Email",
+    "threadListSize": "ThreadList Count"
+}, inplace=True)
+user_df=user_df[['UserId','FirstName','LastName','Email','ThreadList Count']]
+#user_df
+
+
+# In[106]:
+
+
+import pandas as pd
+from datetime import datetime
+date_pipeline = [
+    {"$match": {"user_id": {"$not": {"$regex": "^unknown"}}}},
+    {"$unwind": "$threadList"},
+    {"$project": {
+        "_id": 0,  
+        "date": "$threadList.date" 
+    }}
+]
+date_results = list(collection2.aggregate(date_pipeline))
+
+
+# In[107]:
+
+
+df_dates = pd.DataFrame(date_results)
+#df_dates
+
+
+# In[108]:
+
+
+df_dates['Date'] = pd.to_datetime(df_dates['date'],unit='ms', errors='coerce')
+df_dates['Date1'] = df_dates['Date'].dt.date
+df_dates['MonthYear'] = df_dates['Date'].dt.strftime('%b%y')
+df_dates = df_dates[['Date1', 'MonthYear']]
+#df_dates
+
+
+# In[109]:
+
+
+month_avg = (
+    df_dates.groupby('MonthYear')
+    .size()  
+    .reset_index(name='Count')  
+)
+month_order = pd.to_datetime(month_avg['MonthYear'], format='%b%y')
+month_avg['MonthYear'] = pd.Categorical(month_avg['MonthYear'], categories=month_avg['MonthYear'][month_order.argsort()], ordered=True)
+
+#question&Answers
+pipeline_user_ids = [
+    {"$match": {"user_id": {"$not": {"$regex": "^unknown"}}}}, 
+    {"$group": {"_id": "$user_id"}}, 
+    {"$sort": {"_id": 1}}
+]
+user_ids = list(collection2.aggregate(pipeline_user_ids))
+user_ids = [doc["_id"] for doc in user_ids] 
+#user_ids
 
 user_pipeline = [
     {"$match": {"user_id": {"$not": {"$regex": "^unknown"}}}},
@@ -176,6 +291,74 @@ st.bar_chart(role_counts.set_index('Role'))
 
 
 # In[ ]:
+st.header("Gene Count Chart")
+chart = alt.Chart(gene_df).mark_bar().encode(
+    x=alt.X("Gene:N", sort=None, title="Gene"),  
+    y=alt.Y("Count:Q", title="Count"),          
+    tooltip=["Gene", "Count"]                   
+).properties(
+    width=700,                                  
+    height=400,                                 
+    title="Count of Genes"
+)
+st.altair_chart(chart, use_container_width=True)
+
+st.header("Drug Count Chart")
+chart = alt.Chart(drug_df).mark_bar().encode(
+    x=alt.X("Drug:N", sort=None, title="Drug"),  
+    y=alt.Y("Count:Q", title="Count"),          
+    tooltip=["Drug", "Count"]                   
+).properties(
+    width=700,                                  
+    height=400,                                 
+    title="Count of Drugs"
+)
+st.altair_chart(chart, use_container_width=True)
+
+# Month Bar Chart
+st.header("Month Bar Chart")
+
+heatmap = alt.Chart(month_avg).mark_rect().encode(
+    x=alt.X('MonthYear:N', sort=list(month_avg['MonthYear'].cat.categories), title='Month-Year'),
+    y=alt.Y('Count:Q', title='Count'),
+    color=alt.Color('Count:Q', scale=alt.Scale(scheme='viridis'), title='Count'),
+    tooltip=['MonthYear', 'Count']
+).properties(
+    title="Heatmap of Counts by Month-Year",
+    width=600,
+    height=400
+)
+st.altair_chart(heatmap, use_container_width=True)
+
+st.header("User Info")
+st.dataframe(user_df)
+
+
+# In[ ]:
+
+# dropdown in Streamlit to select a user ID
+selected_user_id = st.selectbox("Select User ID:", user_ids)
+
+#If a user ID is selected, display the corresponding questions and answers
+if selected_user_id:
+    pipeline_questions_answers = [
+        {"$match": {"user_id": selected_user_id}}, 
+        {"$unwind": "$input"}, 
+        {"$unwind": "$input.input_data"},
+        {"$project": {
+            "_id": 0,
+            "user_id": 1,
+            "question": "$input.input_data.question", 
+            "answer": "$input.input_data.answer" 
+        }}
+    ]
+    results = list(collection.aggregate(pipeline_questions_answers))
+    if results:
+        df = pd.DataFrame(results)
+        st.write(f"Questions and Answers for User ID: {selected_user_id}")
+        st.dataframe(df)
+    else:
+        st.warning(f"No data found for User ID: {selected_user_id}")
 
 
 
