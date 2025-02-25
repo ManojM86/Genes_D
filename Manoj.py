@@ -353,7 +353,7 @@ if selected_user_id:
             "answer": "$input.input_data.answer" 
         }}
     ]
-    results = list(collection.aggregate(pipeline_questions_answers))
+    results = list(collection2.aggregate(pipeline_questions_answers))
     if results:
         df = pd.DataFrame(results)
         st.write(f"Questions and Answers for User ID: {selected_user_id}")
