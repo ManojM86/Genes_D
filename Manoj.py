@@ -245,6 +245,7 @@ new_df = pd.DataFrame(new_results)
 
 
 import streamlit as st
+import altair as alt
 
 
 # In[17]:
