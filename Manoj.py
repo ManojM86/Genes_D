@@ -4,7 +4,6 @@
 # In[2]:
 
 
-get_ipython().system('pip install pymongo')
 
 
 # In[3]:
@@ -76,7 +75,7 @@ query_df = pd.DataFrame(query_results)
 # In[8]:
 
 
-query_df
+#query_df
 
 
 # In[9]:
@@ -111,19 +110,19 @@ new_df = pd.DataFrame(new_results)
 # In[12]:
 
 
-merged_df
+#merged_df
 
 
 # In[13]:
 
 
-new_df
+#new_df
 
 
 # In[15]:
 
 
-get_ipython().system('pip install streamlit')
+#get_ipython().system('pip install streamlit')
 
 
 # In[16]:
